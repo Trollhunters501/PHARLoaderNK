@@ -23,9 +23,33 @@ const PHARLoaderNK = Class(Object, {
       },
       getFile: function(dir){
         return PharF.findEntry(dir);
+      },
+      getName: function(){
+        return "PHARLoaderNK";
+      },
+      getClass: function(){
+        return this;
+      },
+      getPHARlibClass: function(){
+        return PHARLib;
+      },
+      getName: function(){
+        return "PHARLoaderNK SubClass";
+      },
+      toString: function(){
+        return "PHARLoaderNK SubClass[]";
       }
     };
     return subClass;
+  },
+  getClass: function(){
+    return this;
+  },
+  getName: function(){
+    return "PHARLoaderNK";
+  },
+  toString: function(){
+    return "PHARLoaderNK[]";
   }
 });
 }else{
