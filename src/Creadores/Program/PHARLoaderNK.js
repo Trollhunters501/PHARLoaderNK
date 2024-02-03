@@ -19,6 +19,7 @@ const PHARLoaderNK = Class(Object, {
         let fileSearch = PharF.findEntry(dir);
         if(fileSearch == null){
           throw "The file was not found in the PHAR!";
+          return;
         }
         let inputFile = fileSearch.getInputStream();
         let FilesImport = new JavaImporter(java.io, java.nio.charset);
