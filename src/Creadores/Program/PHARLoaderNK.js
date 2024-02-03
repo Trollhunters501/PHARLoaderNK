@@ -1,4 +1,11 @@
 if(script.getScriptByName("PHPEngineNK")){
+  script.registerScript({
+    name: "PHARLoaderNK",
+    version: "1.0",
+    description: "Load phar files into Nukkit for PHPEngineNK!",
+    website: "https://github.com/Trollhunters501/PHARLoaderNK/",
+    authors: ["Creadores Program"]
+});
 const PHARLoaderNK = Class(Object, {
   constructor: function(fileP){
     let lib = new NnClassLoader({ urls: ["https://github.com/npetrovski/jphar/releases/download/2.0.1/jphar-2.0.1.jar"] });
