@@ -20,6 +20,9 @@ const PHARLoaderNK = Class(Object, {
           reader = new InputStreamReader(new BufferedInputStream(inputFile), StandardCharsets.UTF_8);
         }
         PHPEngineNKContext.eval(reader);
+      },
+      getFile: function(dir){
+        return PharF.findEntry(dir);
       }
     };
     return subClass;
