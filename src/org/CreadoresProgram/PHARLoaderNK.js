@@ -19,7 +19,20 @@ function load(){
 let LibPHAR = new NnClassLoader({ urls: ["https://github.com/npetrovski/jphar/releases/download/2.0.1/jphar-2.0.1.jar"] });
 function readPhar(file){
   let Phar = LibPHAR.type("name.npetrovski.jphar.Phar");
-  return new Phar(file);
+  let pharF = new Phar(file);
+  let dir = {};
+  for each(let i in pharF.getPharEntries()){
+    if(i.isDirectory()) continue;
+    let inputSt = i.getInputStream();
+    let buffer = new java.io.ByteArrayOutputStream();
+    let Dread;
+    let data = Java.to(new Array(1024), "byte[]");
+    while ((Dread = inputSt.read(data, 0, data.length)) != -1){
+      buffer.write(data, 0, Dread);
+    }
+    buffer.flush();
+    dir[i.getName()] = buffer.toByteArray();
+  }
 }
 function enable(){
   if(isDisable) return;
@@ -28,10 +41,9 @@ function enable(){
   for each(let plPHP in java.util.Objects.requireNonNull(FilePathDir.listFiles())){
     if(plPHP.isDirectory() || !plPHP.getName().endsWith(".phar")) continue;
     let dirPhar = readPhar(plPHP);
-    continue;
     let resources = {};
     let phpCode = "";
-    for each(let fileP in dirPhar.getPharEntries()){
+    for each(let fileP in Object.keys(dirPhar)){
       if(fileP.endsWith(".php")){
         phpCode += ((new java.lang.String(dirPhar[fileP])) + "\n").replace("<?php", "").replace("?>", "");
       }else{
