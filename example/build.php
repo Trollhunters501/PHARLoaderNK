@@ -9,7 +9,6 @@ if (Phar::canCompress(Phar::GZ)) {
 } elseif (Phar::canCompress(Phar::BZ2)) { 
     $phar->compressFiles(Phar::BZ2); 
 }
-$phar->setSignatureAlgorithm(Phar::SHA512);
 $phar->setStub("<?php __HALT_COMPILER(); ?>");
 echo "Done!\n";
 ?>
