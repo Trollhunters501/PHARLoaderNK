@@ -27,10 +27,9 @@ function readPhar(file){
     let buffer = new java.io.ByteArrayOutputStream();
     let Dread;
     let data = Java.to(new Array(1024), "byte[]");
-    while ((Dread = inputSt.read(data, 0, data.length)) != -1){
+    while ((Dread = inputSt.read(data)) != -1){
       buffer.write(data, 0, Dread);
     }
-    buffer.flush();
     dir[i.getName()] = buffer.toByteArray();
   }
   return dir;
@@ -42,6 +41,7 @@ function enable(){
   for each(let plPHP in java.util.Objects.requireNonNull(FilePathDir.listFiles())){
     if(plPHP.isDirectory() || !plPHP.getName().endsWith(".phar")) continue;
     let dirPhar = readPhar(plPHP);
+    console.info(Object.keys(dirPhar).toString());
     let resources = {};
     let phpCode = "";
     for each(let fileP in Object.keys(dirPhar)){
@@ -51,10 +51,9 @@ function enable(){
         resources[fileP] = new java.lang.String(dirPhar[fileP]);
       }
     }
+    console.info(phpCode);
     let Yaml = Java.type("org.yaml.snakeyaml.Yaml");
     let yamlIns = new Yaml();
-    console.info(Object.keys(resources).toString());
-    console.info(resources["plugin.yml"]);
     let PluginYml = yamlIns.load(resources["plugin.yml"]);
     if(PluginYml.get("name") == null){
       console.error(prefix+"§cNot Load "+plPHP.getAbsolutePath()+" plugin.yml name not found!");
