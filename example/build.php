@@ -4,7 +4,7 @@ $pharFile = "Example.phar";
 $phar = new Phar($pharFile);
 $phar->setAlias("Example-1.1.1.phar");
 $phar->startBuffering();
-$phar->buildFromDirectory('Plugin');
+$phar->buildFromDirectory(dirname(__FILE__) . '/Plugin');
 $phar->setStub("<?php __HALT_COMPILER(); ?>");
 if (Phar::canCompress(Phar::GZ)) {
     $phar->compressFiles(Phar::GZ);
