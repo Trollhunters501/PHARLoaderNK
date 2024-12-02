@@ -33,6 +33,7 @@ function readPhar(file){
     buffer.flush();
     dir[i.getName()] = buffer.toByteArray();
   }
+  return dir;
 }
 function enable(){
   if(isDisable) return;
