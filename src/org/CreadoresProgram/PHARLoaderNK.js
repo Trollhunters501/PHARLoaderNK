@@ -16,29 +16,10 @@ function load(){
   PHPEngineNK = require("PHPEngineNK/org/CreadoresProgram/PHPEngineNK.js").PHPEngineNK;
   FilePathDir.mkdir();
 }
+let LibPHAR = new NnClassLoader({ urls: ["https://github.com/npetrovski/jphar/releases/download/2.0.1/jphar-2.0.1.jar"] });
 function readPhar(file){
-  let source = java.nio.file.Files.newInputStream(file.toPath());
-  let zis = new java.util.zip.ZipInputStream(source);
-  let dir = {};
-  try{
-    let entry;
-    while((entry = zis.getNextEntry()) != null){
-      if(entry.isDirectory()) continue;
-      let buffer = new java.io.ByteArrayOutputStream();
-      let tempBuffer = Java.to(new Array(1024), "byte[]");
-      let bytesRead;
-      while((bytesRead = zis.read(tempBuffer)) != -1){
-        buffer.write(tempBuffer, 0, bytesRead);
-      }
-      dir[entry.getName()] = buffer.toByteArray();
-    }
-  }catch(error){
-    console.error("Error in open file phar"+error.toString());
-  }finally{
-    source.close();
-    zis.close();
-  }
-  return dir;
+  let Phar = LibPHAR.type("name.npetrovski.jphar.Phar");
+  return new Phar(file);
 }
 function enable(){
   if(isDisable) return;
@@ -47,9 +28,10 @@ function enable(){
   for each(let plPHP in java.util.Objects.requireNonNull(FilePathDir.listFiles())){
     if(plPHP.isDirectory() || !plPHP.getName().endsWith(".phar")) continue;
     let dirPhar = readPhar(plPHP);
+    continue;
     let resources = {};
     let phpCode = "";
-    for each(let fileP in Object.keys(dirPhar)){
+    for each(let fileP in dirPhar.getPharEntries()){
       if(fileP.endsWith(".php")){
         phpCode += ((new java.lang.String(dirPhar[fileP])) + "\n").replace("<?php", "").replace("?>", "");
       }else{
