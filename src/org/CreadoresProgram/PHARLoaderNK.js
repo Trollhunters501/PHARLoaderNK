@@ -58,7 +58,7 @@ function enable(){
     }
     let Yaml = Java.type("org.yaml.snakeyaml.Yaml");
     let yamlIns = new Yaml();
-    let PluginYml = yamlIns.load(resources["plugin.yml"]);
+    let PluginYml = Java.to(yamlIns.load(resources["plugin.yml"]), "java.util.Map");
     if(PluginYml.get("name") == null){
       console.error(prefix+"§cNot Load "+plPHP.getAbsolutePath()+" plugin.yml name not found!");
       continue;
