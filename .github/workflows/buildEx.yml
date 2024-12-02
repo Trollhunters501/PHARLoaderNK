@@ -15,7 +15,7 @@ jobs:
           php-version: '8.0'
 
       - name: Build PHAR
-        run: php build.php
+        run: php -d phar.readonly=0 build.php
         working-directory: ./example
 
       - name: Upload PHAR
