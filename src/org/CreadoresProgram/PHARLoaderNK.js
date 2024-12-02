@@ -62,7 +62,7 @@ function enable(){
       continue;
     }
     console.info(prefix+"§eLoading "+PluginYml.get("name")+"...");
-    PhpEng.put("resources", Java.to(resources, "java.util.Map<String, String>"));
+    PhpEng.put("resources", resources);
     let MainPhp = PhpEng.getEngine().eval("<?php "+phpCode + "\nreturn new \\"+PluginYml.get("main")+"();\n?>");
     mainsPHPpls[mainsPHPpls.length] = [PluginYml.get("name"), MainPhp];
     pluginsPHP[pluginsPHP.length] = PluginYml;
