@@ -21,7 +21,7 @@ function readPhar(file){
   let Phar = LibPHAR.type("name.npetrovski.jphar.Phar");
   let pharF = new Phar(file);
   let dir = {};
-  for each(let i in pharF.getPharEntries()){
+  for each(let i in pharF.getEntries()){
     if(i.isDirectory()) continue;
     let inputSt = i.getInputStream();
     let buffer = new java.io.ByteArrayOutputStream();
