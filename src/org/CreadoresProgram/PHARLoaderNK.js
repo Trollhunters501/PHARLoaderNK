@@ -41,7 +41,6 @@ function enable(){
   for each(let plPHP in java.util.Objects.requireNonNull(FilePathDir.listFiles())){
     if(plPHP.isDirectory() || !plPHP.getName().endsWith(".phar")) continue;
     let dirPhar = readPhar(plPHP);
-    console.info(Object.keys(dirPhar).toString());
     let resources = {};
     let phpCode = "";
     for each(let fileP in Object.keys(dirPhar)){
@@ -51,7 +50,6 @@ function enable(){
         resources[fileP] = new java.lang.String(dirPhar[fileP]);
       }
     }
-    console.info(phpCode);
     let Yaml = Java.type("org.yaml.snakeyaml.Yaml");
     let yamlIns = new Yaml();
     let PluginYml = yamlIns.load(resources["plugin.yml"]);
@@ -64,7 +62,7 @@ function enable(){
       continue;
     }
     console.info(prefix+"§eLoading "+PluginYml.get("name")+"...");
-    PhpEng.put("resources", Java.to(resources, "java.util.Map"));
+    PhpEng.put("resources", Java.to(resources, "java.util.Map<String, String>"));
     let MainPhp = PhpEng.getEngine().eval("<?php "+phpCode + "\nreturn new \\"+PluginYml.get("main")+"();\n?>");
     mainsPHPpls[mainsPHPpls.length] = [PluginYml.get("name"), MainPhp];
     pluginsPHP[pluginsPHP.length] = PluginYml;
@@ -72,13 +70,13 @@ function enable(){
     PhpEng.eval("<?php if(method_exists($pluginPHP, 'onLoad')){ $pluginPHP->onLoad(); } ?>");
   }
   console.info(prefix+"§eEnabling PHP Plugins...");
-  PhpEng.put("requirePL", Java.to(mainsPHPpls, "java.lang.Object[][]"));
+  PhpEng.put("requirePL", Java.to(mainsPHPpls, "Object[][]"));
   for each(let i in mainsPHPpls){
     console.info(prefix+"§eEnablig "+ i[0]+"...");
     PhpEng.put("pluginPHP", i[1]);
     PhpEng.eval("<?php if(method_exists($pluginPHP, 'onEnable')){ $pluginPHP->onEnable(); } ?>");
   }
-  manager.createCommand("plphp", "plugins php", phpPlCMD, "/plphp", [], "nukkit.command.plugins");
+  manager.createCommand("plphp", "list plugins php", phpPlCMD, "/plphp", ["pluginsphp"], "nukkit.command.plugins");
   console.info(prefix+"§aDone!");
 }
 function phpPlCMD(sender, args, label, managerCMD){
