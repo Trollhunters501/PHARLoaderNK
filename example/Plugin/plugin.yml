@@ -1,3 +1,5 @@
 name: Example
+author: Creadores Program
+description: Example for PHARLoader
 main: org\CreadoresProgram\Main
 version: "1.0.0"

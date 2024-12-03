@@ -89,15 +89,15 @@ function enable(){
     let MainPhp = PhpEng.getEngine().eval("<?php "+phpCode + "\nreturn new \\"+PluginYml.get("main")+"();\n?>");
     mainsPHPpls[mainsPHPpls.length] = [PluginYml.get("name"), MainPhp];
     pluginsPHP[pluginsPHP.length] = PluginYml;
-    PhpEng.put("pluginPHP", MainPhp);
-    PhpEng.eval("<?php $pluginPHP->onLoad(); ?>");
+    PhpEng.put("pluginPHP", mainsPHPpls[mainsPHPpls.length - 1][1]);
+    mainsPHPpls[mainsPHPpls.length - 1][1] = PhpEng.getEngine().eval("<?php $pluginPHP->onLoad(); return $pluginPHP; ?>");
   }
   console.info(prefix+"§eEnabling PHP Plugins...");
   PhpEng.put("requirePL", Java.to(mainsPHPpls, "Object[][]"));
   for each(let i in mainsPHPpls){
     console.info(prefix+"§eEnablig "+ i[0]+"...");
     PhpEng.put("pluginPHP", i[1]);
-    PhpEng.eval("<?php $pluginPHP->onEnable(); ?>");
+    i[1] = PhpEng.getEngine().eval("<?php $pluginPHP->onEnable(); return $pluginPHP; ?>");
   }
   manager.createCommand("plphp", "list plugins php", phpPlCMD, "/plphp", ["pluginsphp"], "nukkit.command.plugins");
   console.info(prefix+"§aDone!");
@@ -152,9 +152,18 @@ function getPhPplugin(name){
   }
   return null;
 }
+function disable(){
+  if(isDisable) return;
+  console.info(prefix+"§cDisable PHP Plugins...");
+  for each(let i in mainsPHPpls){
+    PhpEng.put("pluginPHP", i[1]);
+    PhpEng.eval("<?php $pluginPHP->onDisable(); ?>");
+  }
+}
 
 module.exports = {
   onEnable: enable,
   onLoad: load,
+  onDisable: disable,
   getPhPplugin: getPhPplugin
 };

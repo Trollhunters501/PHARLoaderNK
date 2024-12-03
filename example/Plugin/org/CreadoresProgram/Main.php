@@ -1,16 +1,19 @@
 <?php
 namespace org\CreadoresProgram{
     class Main{
+        public $getLogger;
         public function __construct(){
-            //null
+            global $getLogger;
+            $this->getLogger = $getLogger;
         }
         public function onLoad(){
-            global $getLogger;
-            $getLogger->info("Hello");
+            $this->getLogger->info("Hello");
         }
         public function onEnable(){
-            global $getLogger;
-            $getLogger->info("World");
+            $this->getLogger->info("World");
+        }
+        public function onDisable(){
+            $this->getLogger->info("Byee");
         }
     }
 }
