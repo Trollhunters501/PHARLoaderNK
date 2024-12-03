@@ -21,10 +21,10 @@ function load(){
   JsonNNC.mkdir();
   if(!JsonNN.exists()){
     let escritor = new java.io.FileWriter(JsonNN);
-    escritor.write("[]");
+    escritor.write('{"NnClassLoader":[]}');
   }
   let subJsN = readFully(JsonNN.getAbsolutePath());
-  if(subJsN == "[]") return;
+  if(subJsN == '{"NnClassLoader":[]}') return;
   NnClP = JSON.parse(subJsN);
 }
 let LibPHAR = new NnClassLoader({ urls: ["https://github.com/npetrovski/jphar/releases/download/2.0.1/jphar-2.0.1.jar"] });
@@ -50,7 +50,7 @@ function enable(){
   PhpEng = new PHPEngineNK().build();
   PhpEng.put("Phar", LibPHAR.type("name.npetrovski.jphar.Phar"));
   if(NnClP != null){
-    PhpEng.setNnClassLoader(NnClP[0], NnClP[1]);
+    PhpEng.setNnClassLoader(NnClP.NnClassLoader[0], NnClP.NnClassLoader[1]);
   }
   console.info(prefix+"§eLoading PHP Plugins...");
   for each(let plPHP in java.util.Objects.requireNonNull(FilePathDir.listFiles())){
