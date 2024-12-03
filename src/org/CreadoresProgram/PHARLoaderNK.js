@@ -94,7 +94,7 @@ function enable(){
     mainsPHPpls[mainsPHPpls.length - 1][1] = PhpEng.getEngine().eval("<?php $pluginPHP->onLoad(); return $pluginPHP; ?>");
   }
   console.info(prefix+"§eEnabling PHP Plugins...");
-  PhpEng.put("requirePL", Java.to(mainsPHPpls, "Object[][]"));
+  PhpEng.put("requirePL", mainsPHPpls);
   for each(let i in mainsPHPpls){
     console.info(prefix+"§eEnablig "+ i[0]+"...");
     PhpEng.put("pluginPHP", i[1]);
