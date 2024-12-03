@@ -22,6 +22,7 @@ function load(){
   if(!JsonNN.exists()){
     let escritor = new java.io.FileWriter(JsonNN);
     escritor.write('{"NnClassLoader":[]}');
+    escritor.close();
   }
   let subJsN = readFully(JsonNN.getAbsolutePath());
   if(subJsN == '{"NnClassLoader":[]}') return;
