@@ -18,3 +18,17 @@ This script uses the JPhar library so it supports all phars that support that li
 
 # Plugin Yml in PHARLoaderNK
 It is the same as nukkit except that there is no api, softdepend, depend, authors (but there is author), commands and permissions.
+
+# Config
+There is a configuration to add Java libraries with the NnClassLoader API
+in plugins/PHARLoader/Config/NnClassLoaderPHP.json:
+```json
+{
+  "NnClassLoader":[{
+     "maven": ["groupName:package:1.0.0"]
+   },
+   {
+      "objectName": "java.class.My"
+   }]//equal to setNnClassLoader in PHPEngineNK
+}
+```
