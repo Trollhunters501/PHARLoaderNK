@@ -17,6 +17,8 @@ function load(){
   console.info(prefix+"§eLoading...");
   PHPEngineNK = require("PHPEngineNK/org/CreadoresProgram/PHPEngineNK.js").PHPEngineNK;
   FilePathDir.mkdir();
+  let JsonNNC = new java.io.File(PathDir+"Config/");
+  JsonNNC.mkdir();
   if(!JsonNN.exists()){
     let escritor = new java.io.FileWriter(JsonNN);
     escritor.write("[]");

@@ -5,9 +5,11 @@ namespace org\CreadoresProgram{
             //null
         }
         public function onLoad(){
+            global $getLogger;
             $getLogger->info("Hello");
         }
         public function onEnable(){
+            global $getLogger;
             $getLogger->info("World");
         }
     }
