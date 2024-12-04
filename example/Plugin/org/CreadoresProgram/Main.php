@@ -9,7 +9,7 @@ namespace org\CreadoresProgram{
         }
         public function onLoad(){
             $this->getLogger->info("Hello");
-            $this->getLogger->info(Nukkit::VERSION);
+            $this->getLogger->info(\cn\nukkit\Nukkit::VERSION);
         }
         public function onEnable(){
             $this->getLogger->info("World");
