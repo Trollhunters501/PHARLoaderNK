@@ -1,6 +1,6 @@
 <?php
 import cn.nukkit.Nukkit;
-$versionNK = Nukkit::VERSION;
+$versionNK = Nukkit::API_VERSION;
 namespace org\CreadoresProgram{
     class Main{
         public $getLogger;
