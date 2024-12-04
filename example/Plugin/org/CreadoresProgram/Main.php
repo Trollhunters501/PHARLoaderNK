@@ -1,6 +1,10 @@
 <?php
 import cn.nukkit.Nukkit;
+class NukkitPHP{
+    const VERSION = Nukkit::VERSION;
+}
 namespace org\CreadoresProgram{
+    use NukkitPHP;
     class Main{
         public $getLogger;
         public function __construct(){
@@ -9,7 +13,7 @@ namespace org\CreadoresProgram{
         }
         public function onLoad(){
             $this->getLogger->info("Hello");
-            $this->getLogger->info(\cn\nukkit\Nukkit::VERSION);
+            $this->getLogger->info(NukkitPHP::VERSION);
         }
         public function onEnable(){
             $this->getLogger->info("World");
