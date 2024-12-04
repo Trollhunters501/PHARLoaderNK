@@ -1,6 +1,4 @@
 <?php
-import cn.nukkit.Nukkit;
-$versionNK = Nukkit::VERSION;
 namespace org\CreadoresProgram{
     class Main{
         public $getLogger;
@@ -10,8 +8,9 @@ namespace org\CreadoresProgram{
         }
         public function onLoad(){
             $this->getLogger->info("Hello");
-            global $versionNK;
-            $this->getLogger->info($versionNK);
+            //static java
+            $Nukkit = \java_class("cn.nukkit.Nukkit");
+            $this->getLogger->info($Nukkit->VERSION);
         }
         public function onEnable(){
             $this->getLogger->info("World");
