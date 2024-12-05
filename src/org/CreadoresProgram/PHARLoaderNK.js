@@ -50,6 +50,30 @@ function enable(){
   if(isDisable) return;
   PhpEng = new PHPEngineNK().build();
   PhpEng.put("Phar", LibPHAR.type("name.npetrovski.jphar.Phar"));
+  PhpEng.put("NKevents", new java.util.function.BiFunction(function(eventstr, callb){
+    script.addEventListener(eventstr, function(event){
+      PhpEng.put("eventNK3233567878_"+eventstr, event);
+      PhpEng.put("callb5354646646NK_"+eventstr, callb);
+      PhpEng.eval("<?php $callb5354646646NK_"+eventstr+"($eventNK3233567878_"+eventstr+"); ?>");
+    });
+  }));
+  PhpEng.put("NKcommandAdapter", new java.util.function.Function(function(callb){
+    return function CommandPHP(sender, args, label, managerCMD){
+      PhpEng.put("senderCMDNK28828383_"+label, sender);
+      PhpEng.put("argsCMDNK2938384_"+label, args);
+      PhpEng.put("labelCMDNK283747_"+label, label);
+      PhpEng.put("managetCMD902898932_"+label, managerCMD);
+      PhpEng.put("callb2883833_"+label, callb);
+      PhpEng.eval("<?php $callb2883833_"+label+"($senderCMDNK28828383_"+label+", $argsCMDNK2938384_"+label+", $labelCMDNK283747_"+label+", $managetCMD902898932_"+label+"); ?>");
+    };
+  }));
+  PhpEng.put("NKTaskAdapter", new java.util.function.Function(function(callb){
+    return function TaskPHP(tik){
+      PhpEng.put("tik983894883443_"+tik, tik);
+      PhpEng.put("callb28838338_"+tik, callb);
+      PhpEng.eval("<?php $callb28838338_"+tik+"($tik983894883443_"+tik+"); ?>");
+    };
+  }));
   if(NnClP != null){
     PhpEng.setNnClassLoader(NnClP.NnClassLoader[0], NnClP.NnClassLoader[1]);
   }
@@ -116,6 +140,7 @@ function phpPlCMD(sender, args, label, managerCMD){
 }
 
 script.addEventListener('ServerCommandEvent', function (event){
+  if(!event.getSender().hasPermission("nukkit.command.version")) return;
   let args = event.getCommand().split(" ");
   let label = args.shift();
   if(label != "ver" || label != "version") return;
@@ -123,6 +148,7 @@ script.addEventListener('ServerCommandEvent', function (event){
   return VerfyVer(event.getSender(), args, label);
 });
 script.addEventListener('PlayerCommandPreprocessEvent', function(event){
+  if(!event.getPlayer().hasPermission("nukkit.command.version")) return;
   let args = event.getMessage().replace("/", "").split(" ");
   let label = args.shift();
   if(label != "ver" || label != "version") return;
