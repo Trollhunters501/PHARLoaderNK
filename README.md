@@ -19,6 +19,8 @@ This script uses the JPhar library so it supports all phars that support that li
 # Plugin Yml in PHARLoaderNK
 It is the same as nukkit except that there is no api, softdepend, depend, authors (but there is author), commands and permissions.
 
+main is the same as Pocketmine
+
 # Config
 There is a configuration to add Java libraries with the NnClassLoader API
 in plugins/PHARLoader/Config/NnClassLoaderPHP.json:
