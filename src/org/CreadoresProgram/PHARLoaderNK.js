@@ -97,6 +97,16 @@ function enable(){
       console.error(prefix+"§cNot Load "+plPHP.getAbsolutePath()+" plugin.yml name not found!");
       continue;
     }
+    let isCopy;
+    for each(let uo in pluginsPHP){
+      if(uo.get("name") == PluginYml.get("name")){
+        isCopy = true;
+      }
+    }
+    if(isCopy){
+      console.error(prefix+"§cNot Load "+PluginYml.get("name")+" plugin already load!");
+      continue;
+    }
     if(PluginYml.get("main") == null){
       console.error(prefix+"§cNot Load "+PluginYml.get("name")+" main not found!");
       continue;
@@ -110,7 +120,7 @@ function enable(){
       continue;
     }
     console.info(prefix+"§eLoading "+PluginYml.get("name")+"...");
-    PhpEng.put("resources", resources);
+    PhpEng.put("resources", Java.asJSONCompatible(resources));
     let MainPhp = PhpEng.getEngine().eval("<?php "+phpCode + "\nreturn new \\"+PluginYml.get("main")+"();\n?>");
     mainsPHPpls[mainsPHPpls.length] = [PluginYml.get("name"), MainPhp];
     pluginsPHP[pluginsPHP.length] = PluginYml;
@@ -118,7 +128,7 @@ function enable(){
     mainsPHPpls[mainsPHPpls.length - 1][1] = PhpEng.getEngine().eval("<?php $pluginPHP->onLoad(); return $pluginPHP; ?>");
   }
   console.info(prefix+"§eEnabling PHP Plugins...");
-  PhpEng.put("requirePL", mainsPHPpls);
+  PhpEng.put("requirePL", Java.asJSONCompatible(mainsPHPpls));
   for each(let i in mainsPHPpls){
     console.info(prefix+"§eEnablig "+ i[0]+"...");
     PhpEng.put("pluginPHP", i[1]);
@@ -145,7 +155,11 @@ script.addEventListener('ServerCommandEvent', function (event){
   let label = args.shift();
   if(label != "ver" || label != "version") return;
   if(args[0] != "php") return;
-  return VerfyVer(event.getSender(), args, label);
+  let msg;
+  if((msg = VerfyVer(event.getPlayer(), args, label))){
+    event.setCancelled(true);
+    event.getSender().sendMessage(msg);
+  }
 });
 script.addEventListener('PlayerCommandPreprocessEvent', function(event){
   if(!event.getPlayer().hasPermission("nukkit.command.version")) return;
@@ -153,7 +167,11 @@ script.addEventListener('PlayerCommandPreprocessEvent', function(event){
   let label = args.shift();
   if(label != "ver" || label != "version") return;
   if(args[0] != "php") return;
-  return VerfyVer(event.getPlayer(), args, label);
+  let msg;
+  if((msg = VerfyVer(event.getPlayer(), args, label))){
+    event.setCancelled(true);
+    event.getPlayer().sendMessage(msg);
+  }
 });
 function VerfyVer(sender, args, label){
   for each(let i in pluginsPHP){
@@ -168,6 +186,7 @@ function VerfyVer(sender, args, label){
     if(i.get("author") != null){
       msg += "\nAuthor: "+i.get("author");
     }
+    return msg;
   }
 }
 
