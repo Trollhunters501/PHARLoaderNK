@@ -74,6 +74,11 @@ function enable(){
       PhpEng.eval("<?php $callb28838338_"+tik+"($tik983894883443_"+tik+"); ?>");
     };
   }));
+  PhpEng.put("Java", Java);
+  PhpEng.put("creaInsJava", new java.util.function.BiFunction(function(clazz, args){
+    let Subargs = args.map(function(_, i) { return "args[" + i + "]"; }).join(", ");
+    return eval("return new clazz("+Subargs+");");
+  }));
   if(NnClP != null){
     PhpEng.setNnClassLoader(NnClP.NnClassLoader[0], NnClP.NnClassLoader[1]);
   }
