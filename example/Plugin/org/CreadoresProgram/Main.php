@@ -8,8 +8,8 @@ namespace org\CreadoresProgram{
         }
         public function onLoad(){
             $this->getLogger->info("Hello");
-            //static java
-            $Nukkit = \java_class("cn.nukkit.Nukkit");
+            global $Java;
+            $Nukkit = $Java->type("cn.nukkit.Nukkit");
             $this->getLogger->info($Nukkit->VERSION);
         }
         public function onEnable(){

@@ -76,7 +76,8 @@ function enable(){
   }));
   PhpEng.put("Java", Java);
   PhpEng.put("creaInsJava", new java.util.function.BiFunction(function(clazz, args){
-    let Subargs = args.map(function(_, i) { return "args[" + i + "]"; }).join(", ");
+    let argss = Java.from(args);
+    let Subargs = argss.map(function(_, i) { return "args[" + i + "]"; }).join(", ");
     return eval("return new clazz("+Subargs+");");
   }));
   if(NnClP != null){
